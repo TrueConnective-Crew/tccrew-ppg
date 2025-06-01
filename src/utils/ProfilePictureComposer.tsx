@@ -8,6 +8,17 @@ interface Props {
 
 function AvatarComposer({ avatarUrl }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const loadImage = (src: string): Promise<HTMLImageElement> => {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous"; // wichtig bei API-Bildern!
+      img.onload = () => res(img);
+      img.onerror = rej;
+      img.src = src;
+    });
+  };
+
   const downloadImage = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -34,26 +45,17 @@ function AvatarComposer({ avatarUrl }: Props) {
     link.href = canvas.toDataURL("image/png");
     link.click();
   };
-  const loadImage = (src: string): Promise<HTMLImageElement> => {
-    return new Promise((res, rej) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous"; // wichtig bei API-Bildern!
-      img.onload = () => res(img);
-      img.onerror = rej;
-      img.src = src;
-    });
-  };
 
   return (
-    <Flex>
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+    <Flex direction="column" align="center" justify="center" m={8} gap={4}>
+      <canvas ref={canvasRef} style={{ width: "256px", height: "256px" }} />
       <Button
         onClick={downloadImage}
         variant="surface"
         colorPalette="teal"
         width={"sm"}
       >
-        Download
+        Profilbild erstellen und herunterladen!
       </Button>
     </Flex>
   );

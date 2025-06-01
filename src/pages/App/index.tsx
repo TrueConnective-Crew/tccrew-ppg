@@ -109,7 +109,7 @@ function App() {
               loadingText="Lade Profilbild..."
               width={"sm"}
             >
-              Profilbild erstellen!
+              Profilbild laden!
             </Button>
             {showComposer && avatarUrl && (
               <AvatarComposer avatarUrl={avatarUrl} />
